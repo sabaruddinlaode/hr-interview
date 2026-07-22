@@ -176,20 +176,14 @@ async function apiPost(action, data = {}) {
 
     data.action = action;
 
-    const response = await fetch(API_URL,{
+    const params = new URLSearchParams(data);
 
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
-        },
-
-        body:JSON.stringify(data)
-
+    const response = await fetch(API_URL, {
+        method: "POST",
+        body: params
     });
 
     return await response.json();
-
 }
 
 async function loadData(){
