@@ -33,9 +33,659 @@
 
 <body>
 
+<body>
+<div id="loading"
+     class="position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75"
+     style="display:none; z-index:9999;">
 
+    <div class="position-absolute top-50 start-50 translate-middle text-center">
 
-    <!-- ===== NANTI SEMUA HTML DARI APPS SCRIPT AKAN DIPINDAHKAN KE SINI ===== -->
+        <div id="loadingText" class="fw-bold fs-5">
+            Memuat data...
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+</div>
+
+<nav class="navbar mb-4">
+
+<div class="container-fluid">
+
+<span class="navbar-brand">
+
+📋 HR Interview Management PT KHONG GUAN BISCUIT FACTORY
+
+</span>
+
+</div>
+
+</nav>
+
+<div class="container">
+
+<div class="row mb-3">
+
+<div class="col-md-4 mb-3">
+
+<div class="card card-box bg-total">
+
+<div class="card-body text-center">
+
+<p>Total Pelamar</p>
+
+<h2 id="lblTotal">0</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<div class="card card-box bg-belum">
+
+<div class="card-body text-center">
+
+<p>Belum Dikirim</p>
+
+<h2 id="lblBelum">0</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+<div class="card card-box bg-kirim">
+
+<div class="card-body text-center">
+
+<p>Sudah Dikirim</p>
+
+<h2 id="lblKirim">0</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
+
+    <!-- Search -->
+    <div class="mb-2">
+        <input type="text"
+               id="txtCari"
+               class="form-control"
+               placeholder="🔍 Cari Nama"
+               style="width:350px;">
+    </div>
+
+    <!-- Tombol -->
+    <div>
+
+        <!-- Baris 1 -->
+        <div class="mb-2 text-end">
+
+            <button class="btn btn-secondary"
+                    onclick="refreshData()">
+                🔄 Refresh
+            </button>
+
+            <button class="btn btn-primary"
+                    onclick="pilihFileImport()">
+                📥 Import Excel
+            </button>
+
+            <button class="btn btn-success"
+                    onclick="exportCSV()">
+                📤 Export CSV
+            </button>
+
+            <button class="btn btn-dark"
+                    onclick="bukaTemplate()">
+                💬 Template WA
+            </button>
+
+        </div>
+
+        <!-- Baris 2 -->
+        <div class="text-end">
+
+            <button class="btn btn-danger"
+                    onclick="showBroadcast()">
+                🚀 Broadcast WA
+            </button>
+
+            <button class="btn btn-success"
+                    onclick="terkirimSemua()">
+                ✅ Tandai Semua Terkirim
+            </button>
+
+            <button class="btn btn-primary"
+                    onclick="kirimBerikutnya()">
+                ⏩ Kirim Berikutnya
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th class="text-center" width="60">No</th>
+
+<th class="text-center">Nama</th>
+
+<th class="text-center">No WA</th>
+
+<th class="text-center">Posisi</th>
+
+<th class="text-center">Tanggal</th>
+
+<th class="text-center">Jam</th>
+
+<th class="text-center">Status</th>
+
+<th class="text-center" width="130">Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tblData">
+
+<tr>
+
+<td colspan="8" class="text-center">
+
+Memuat data...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ======================================
+     MODAL KONFIRMASI TERKIRIM
+====================================== -->
+
+<div class="modal fade" id="modalTerkirim" tabindex="-1">
+
+<div class="modal-dialog modal-dialog-centered">
+
+<div class="modal-content">
+
+<div class="modal-header bg-success text-white">
+
+<h5 class="modal-title">
+✅ Konfirmasi Pengiriman
+</h5>
+
+<button
+type="button"
+class="btn-close btn-close-white"
+data-bs-dismiss="modal">
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<div class="text-center mb-3">
+
+<h5 id="modalNama"></h5>
+
+<p class="text-muted mb-0">
+📱 <span id="modalWA"></span>
+</p>
+
+</div>
+
+<div class="alert alert-warning text-center">
+
+Apakah pesan WhatsApp sudah benar-benar berhasil dikirim?
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-secondary"
+data-bs-dismiss="modal">
+
+Batal
+
+</button>
+
+<button
+class="btn btn-success"
+onclick="prosesTerkirim()">
+
+✔ Ya, Terkirim
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Loading Simpan -->
+<div id="savingOverlay" style="display:none;">
+    <div class="saving-box">
+        <div class="spinner-border text-success mb-3" role="status"></div>
+
+        <h5>⏳ Menyimpan data...</h5>
+
+        <small class="text-muted">
+            Mohon tunggu sebentar
+        </small>
+    </div>
+</div>
+
+<input
+type="file"
+id="fileExcel"
+accept=".xlsx,.xls"
+style="display:none"
+onchange="bacaFileExcel(event)">
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- =========================
+     MODAL IMPORT EXCEL
+========================== -->
+
+<div class="modal fade" id="modalImport" tabindex="-1">
+
+<div class="modal-dialog modal-lg">
+
+<div class="modal-content">
+
+<div class="modal-header bg-primary text-white">
+
+<h5 class="modal-title">
+📥 Import Data Pelamar
+</h5>
+
+<button
+type="button"
+class="btn-close btn-close-white"
+data-bs-dismiss="modal">
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<p><b>Nama File :</b>
+<span id="namaFile"></span></p>
+
+<p><b>Jumlah Data :</b>
+<span id="jumlahData"></span></p>
+
+<div class="alert alert-warning">
+
+<b>Perhatian!</b><br>
+
+Semua data pada Sheet <b>MASTER</b>
+akan dihapus dan diganti dengan data
+dari file Excel.
+
+Pastikan Anda sudah melakukan
+<b>Export Data</b> terlebih dahulu.
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-sm">
+
+<thead class="table-light">
+
+<tr>
+
+<th>Nama</th>
+<th>No WA</th>
+<th>Posisi</th>
+<th>Tanggal</th>
+<th>Jam</th>
+
+</tr>
+
+</thead>
+
+<tbody id="previewImport">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-secondary"
+data-bs-dismiss="modal">
+
+Batal
+
+</button>
+
+<button
+class="btn btn-success"
+onclick="importSekarang()">
+
+✅ Import Sekarang
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal fade" id="modalTemplate" tabindex="-1">
+
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">💬 Template WhatsApp</h5>
+
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <textarea
+          id="txtTemplate"
+          class="form-control"
+          rows="12"></textarea>
+
+        <div class="mt-3">
+
+          <b>Placeholder yang tersedia</b><br>
+
+          {NAMA}<br>
+          {POSISI}<br>
+          {TANGGAL}<br>
+          {JAM}<br>
+          {NOWA}
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button class="btn btn-secondary"
+                data-bs-dismiss="modal">
+          Tutup
+        </button>
+
+        <button class="btn btn-success"
+                onclick="simpanTemplate()">
+          💾 Simpan
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===========================
+     MODAL BROADCAST WA
+============================ -->
+
+<div class="modal fade" id="modalBroadcast">
+
+<div class="modal-dialog">
+
+<div class="modal-content">
+
+<div class="modal-header bg-danger text-white">
+
+<h5 class="modal-title">
+
+🚀 Broadcast WhatsApp
+
+</h5>
+
+<button
+type="button"
+class="btn-close btn-close-white"
+data-bs-dismiss="modal"></button>
+
+</div>
+
+<div class="modal-body">
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Jumlah Pelamar
+
+</label>
+
+<select
+id="broadcastJumlah"
+class="form-select">
+
+<option value="10">10 Orang</option>
+
+<option value="20">20 Orang</option>
+
+<option value="50">50 Orang</option>
+
+<option value="99999">Semua</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Jeda Antar Chat
+
+</label>
+
+<select
+id="broadcastDelay"
+class="form-select">
+
+<option value="1">1 Detik</option>
+
+<option value="2" selected>2 Detik</option>
+
+<option value="3">3 Detik</option>
+
+<option value="5">5 Detik</option>
+
+</select>
+
+</div>
+
+<div class="form-check">
+
+<input
+class="form-check-input"
+type="checkbox"
+checked
+id="skipSent">
+
+<label
+class="form-check-label">
+
+Lewati yang sudah TERKIRIM
+
+</label>
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-secondary"
+data-bs-dismiss="modal">
+
+Batal
+
+</button>
+
+<button
+class="btn btn-danger"
+onclick="mulaiBroadcast()">
+
+🚀 Mulai
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal fade"
+     id="modalProgress"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+
+<div class="modal-dialog modal-dialog-centered">
+
+<div class="modal-content">
+
+<div class="modal-header bg-danger text-white">
+
+<h5 class="modal-title">
+
+🚀 Broadcast WhatsApp
+
+</h5>
+
+</div>
+
+<div class="modal-body">
+
+<div class="progress mb-3" style="height:25px;">
+
+<div
+id="progressBar"
+class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+style="width:0%">
+
+0%
+
+</div>
+
+</div>
+
+<div class="text-center">
+
+<h5 id="lblProgress">
+
+0 / 0
+
+</h5>
+
+</div>
+
+<hr>
+
+<div class="text-center">
+
+<div id="lblNama"
+     class="fw-bold fs-5">
+
+-
+
+</div>
+
+<div id="lblWA"
+     class="text-muted">
+
+-
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-danger"
+onclick="stopBroadcast()">
+
+■ STOP
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ======= BAGIAN 2 JAVA SCRIPT DILETAKKAN DI SINI ======= -->
 
 
 
