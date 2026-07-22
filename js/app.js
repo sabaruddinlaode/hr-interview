@@ -7,31 +7,6 @@
    GLOBAL VARIABLE
 ========================================== */
 
-let DATA = [];
-let IMPORT_DATA = [];
-let TEMPLATE = "";
-
-let BROADCAST = [];
-let INDEX_BROADCAST = 0;
-let DELAY_BROADCAST = 2000;
-
-let noWaKonfirmasi = "";
-document.addEventListener("DOMContentLoaded", () => {
-
-    loadData();
-
-});
-
-
-let DATA = [];
-let noWaKonfirmasi = "";
-let IMPORT_DATA = [];
-let TEMPLATE = "";
-let BROADCAST = [];
-let INDEX_BROADCAST = 0;
-let DELAY_BROADCAST = 2000;
-let STOP_BROADCAST = false;
-
 
 /* ================================
    LOAD DATA
