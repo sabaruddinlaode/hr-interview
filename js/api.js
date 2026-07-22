@@ -175,13 +175,20 @@ async function apiGet(action, params = {}) {
 async function apiPost(action, data = {}) {
 
     data.action = action;
+    data.key = API_KEY;
 
-    const params = new URLSearchParams(data);
+    const formData = new URLSearchParams();
 
-    const response = await fetch(API_URL, {
-        method: "POST",
-        body: params
+    Object.keys(data).forEach(key=>{
+        formData.append(key, data[key]);
     });
+
+
+    const response = await fetch(API_URL,{
+        method:"POST",
+        body:formData
+    });
+
 
     return await response.json();
 }
