@@ -43,3 +43,72 @@ function outputJSON(data){
     .setMimeType(ContentService.MimeType.JSON);
 
 }
+
+function doPost(e){
+
+  try{
+
+    const req = JSON.parse(e.postData.contents);
+
+    switch(req.action){
+
+      case "updateStatus":
+
+        return outputJSON({
+
+          success: updateStatus(
+            req.noWa,
+            req.status
+          )
+
+        });
+
+      case "saveTemplateWA":
+
+        saveTemplateWA(req.template);
+
+        return outputJSON({
+
+          success:true
+
+        });
+
+      case "importExcel":
+
+        return outputJSON({
+
+          jumlah: importExcel(req.rows)
+
+        });
+
+      case "terkirimSemua":
+
+        return outputJSON({
+
+          jumlah: terkirimSemua()
+
+        });
+
+      default:
+
+        return outputJSON({
+
+          success:false,
+          message:"Action tidak dikenal."
+
+        });
+
+    }
+
+  }catch(err){
+
+    return outputJSON({
+
+      success:false,
+      message:err.toString()
+
+    });
+
+  }
+
+}
