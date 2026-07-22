@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-<script>
 
 let DATA = [];
 let noWaKonfirmasi = "";
@@ -1007,4 +1006,3 @@ function stopBroadcast(){
     STOP_BROADCAST = true;
 
 }
-</script>
