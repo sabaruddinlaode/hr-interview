@@ -1,6 +1,15 @@
 // REST API
 function doGet(e){
 
+  if(e.parameter.key != API_KEY){
+
+    return outputJSON({
+      success:false,
+      message:"Unauthorized"
+    });
+
+  }
+
   const action = e.parameter.action;
 
   switch(action){
@@ -17,17 +26,25 @@ function doGet(e){
     case "getBroadcastData":
 
       return outputJSON(
+
         getBroadcastData(
+
           Number(e.parameter.jumlah),
-          e.parameter.skip == "true"
+
+          e.parameter.skip=="true"
+
         )
+
       );
 
     default:
 
       return outputJSON({
+
         success:false,
+
         message:"Action tidak ditemukan."
+
       });
 
   }
@@ -49,6 +66,20 @@ function doPost(e){
   try{
 
     const req = JSON.parse(e.postData.contents);
+
+    // ===============================
+    // CEK API KEY
+    // ===============================
+    if(req.key != API_KEY){
+
+      return outputJSON({
+
+        success:false,
+        message:"Unauthorized"
+
+      });
+
+    }
 
     switch(req.action){
 
