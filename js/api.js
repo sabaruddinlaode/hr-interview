@@ -162,13 +162,10 @@ const API_KEY =
 async function apiGet(action, params = {}) {
 
     params.action = action;
-    params.key = API_KEY;
 
     const query = new URLSearchParams(params);
 
-    const response = await fetch(
-        API_URL + "?" + query.toString()
-    );
+    const response = await fetch(API_URL + "?" + query);
 
     return await response.json();
 
@@ -182,24 +179,22 @@ async function apiGet(action, params = {}) {
 async function apiPost(action, data = {}) {
 
     data.action = action;
-    data.key = API_KEY;
 
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_URL,{
 
-        method: "POST",
+        method:"POST",
 
-        headers: {
-            "Content-Type": "application/json"
+        headers:{
+            "Content-Type":"application/json"
         },
 
-        body: JSON.stringify(data)
+        body:JSON.stringify(data)
 
     });
 
     return await response.json();
 
 }
-
 async function loadData(){
 
     try{
