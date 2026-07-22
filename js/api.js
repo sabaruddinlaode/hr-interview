@@ -150,7 +150,7 @@ function doPost(e){
 
 const API_URL =
 "https://script.google.com/macros/s/AKfycbxT_d3nWfFnLM0uxEVOjS8gPlLGWvI_SC_88h_PRztDLK_NOW40dvJamP5E3BYEdCt_/exec";
-
+const API_KEY = "SBR-HR-2026-9d7KxL82Pq";
 
 /* ==========================================
    GET
