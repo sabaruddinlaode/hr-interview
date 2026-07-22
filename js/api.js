@@ -172,16 +172,24 @@ async function apiGet(action, params = {}) {
    POST
 ========================================== */
 
-async function apiPost(action,data={}) {
+async function apiPost(action, data = {}) {
 
     data.action = action;
 
     const response = await fetch(API_URL,{
+
         method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
         body:JSON.stringify(data)
+
     });
 
     return await response.json();
+
 }
 
 async function loadData(){
