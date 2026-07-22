@@ -249,3 +249,16 @@ async function loadDashboard(){
         dash.terkirim;
 
 }
+
+function showLoading(text){
+
+    document.getElementById("loadingText").innerHTML = text;
+    document.getElementById("loading").style.display = "block";
+
+}
+
+function hideLoading(){
+
+    document.getElementById("loading").style.display = "none";
+
+}
