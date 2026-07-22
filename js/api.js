@@ -143,3 +143,59 @@ function doPost(e){
   }
 
 }
+
+/* ==========================================
+   API CONFIG
+========================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycby3PNvsf31qdX_-mDILidHyCZV62cDK2DZB38i1otuhthqKfrXLeUhZY2yzTslVWQpj/exec";
+
+const API_KEY =
+"SBR-HR-2026-9d7KxL82Pq";
+
+
+/* ==========================================
+   GET
+========================================== */
+
+async function apiGet(action, params = {}) {
+
+    params.action = action;
+    params.key = API_KEY;
+
+    const query = new URLSearchParams(params);
+
+    const response = await fetch(
+        API_URL + "?" + query.toString()
+    );
+
+    return await response.json();
+
+}
+
+
+/* ==========================================
+   POST
+========================================== */
+
+async function apiPost(action, data = {}) {
+
+    data.action = action;
+    data.key = API_KEY;
+
+    const response = await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(data)
+
+    });
+
+    return await response.json();
+
+}
