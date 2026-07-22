@@ -149,8 +149,7 @@ function doPost(e){
 ========================================== */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycby3PNvsf31qdX_-mDILidHyCZV62cDK2DZB38i1otuhthqKfrXLeUhZY2yzTslVWQpj/exec";
-
+"https://script.google.com/macros/s/AKfycbxT_d3nWfFnLM0uxEVOjS8gPlLGWvI_SC_88h_PRztDLK_NOW40dvJamP5E3BYEdCt_/exec";
 const API_KEY =
 "SBR-HR-2026-9d7KxL82Pq";
 
