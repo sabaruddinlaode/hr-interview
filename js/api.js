@@ -199,3 +199,53 @@ async function apiPost(action, data = {}) {
     return await response.json();
 
 }
+
+async function loadData(){
+
+    try{
+
+        showLoading("📄 Memuat data...");
+
+        DATA = await apiGet("getData");
+
+        renderTable(DATA);
+
+        await loadDashboard();
+
+        hideLoading();
+
+    }
+    catch(err){
+
+        hideLoading();
+
+        console.error(err);
+
+        Swal.fire({
+
+            icon:"error",
+
+            title:"Error",
+
+            text:err.message
+
+        });
+
+    }
+
+}
+
+async function loadDashboard(){
+
+    const dash = await apiGet("getDashboard");
+
+    document.getElementById("totalData").innerHTML =
+        dash.total;
+
+    document.getElementById("belumKirim").innerHTML =
+        dash.belum;
+
+    document.getElementById("sudahKirim").innerHTML =
+        dash.terkirim;
+
+}
