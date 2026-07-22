@@ -16,3 +16,8 @@ let INDEX_BROADCAST = 0;
 let DELAY_BROADCAST = 2000;
 
 let noWaKonfirmasi = "";
+document.addEventListener("DOMContentLoaded", () => {
+
+    loadData();
+
+});
